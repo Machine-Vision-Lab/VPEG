@@ -1,0 +1,13 @@
+#Don't track content of these folders
+softmotion30_44k/
+
+#Datasets
+*.tfrecords
+*.png
+*.gif
+*.jpg
+*.hdf5
+*.h5
+
+#Archives
+*.tar
