@@ -20,7 +20,7 @@ parser.add_argument('--model_dir', default='', help='base directory to save logs
 parser.add_argument('--name', default='', help='identifier for directory')
 parser.add_argument('--data_root', default='data', help='root directory for data')
 parser.add_argument('--optimizer', default='adam', help='optimizer to train with')
-parser.add_argument('--niter', type=int, default=100, help='number of epochs to train for')
+parser.add_argument('--niter', type=int, default=50, help='number of epochs to train for')
 parser.add_argument('--seed', default=1, type=int, help='manual seed')
 parser.add_argument('--epoch_size', type=int, default=600, help='epoch size')
 parser.add_argument('--image_width', type=int, default=64, help='the height / width of the input image to network')
@@ -29,7 +29,7 @@ parser.add_argument('--dataset', default='kth', help='dataset to train with')
 parser.add_argument('--n_past', type=int, default=2, help='number of frames to condition on')
 parser.add_argument('--n_future', type=int, default=10, help='number of frames to predict during training')
 parser.add_argument('--n_eval', type=int, default=12, help='number of frames to predict during eval')
-parser.add_argument('--rnn_size', type=int, default=256, help='dimensionality of hidden layer')
+parser.add_argument('--rnn_size', type=int, default=64, help='dimensionality of hidden layer')
 parser.add_argument('--prior_rnn_layers', type=int, default=1, help='number of layers')
 parser.add_argument('--posterior_rnn_layers', type=int, default=1, help='number of layers')
 parser.add_argument('--predictor_rnn_layers', type=int, default=2, help='number of layers')
@@ -74,7 +74,7 @@ dtype = torch.cuda.FloatTensor
 
 print(opt)
 
-# ---------------- optimizers ----------------
+# ------------------- optimizers -------------------
 if opt.optimizer == 'adam':
     opt.optimizer = optim.Adam
 elif opt.optimizer == 'rmsprop':
@@ -182,7 +182,11 @@ def plot_rec(x, epoch):
     gen_seq.append(x[0])
     x_in = x[0]
     for i in range(1, opt.n_past+opt.n_future):
-        h_target = encoder(x[i])[0]
+        #print(len(encoder(x[i])))
+        try:
+            h_target = encoder(x[i])[0]
+        except:
+            continue
         if i < opt.n_past:	
             h, skip = encoder(x[i-1])
         x_pred = decoder([h_target.detach(), skip])
@@ -265,7 +269,8 @@ for epoch in range(opt.niter):
     posterior.eval()
     prior.eval()
     
-    x = next(testing_batch_generator)
+    x = next(training_batch_generator)
+    #print(len(x))
     # plot(x, epoch)
     plot_rec(x, epoch)
 

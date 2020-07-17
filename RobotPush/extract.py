@@ -104,8 +104,8 @@ def extract_data(data_dir, output_dir, frame_rate):
 
 
 def main():
-    data_dir = './softmotion30_44k/train'
-    output_dir = './ExtractedData/train'
+    data_dir = '../softmotion30_44k/test'
+    output_dir = './ExtractedData/test'
     frame_rate = 4
     extract_data(data_dir, output_dir, frame_rate)
     return
