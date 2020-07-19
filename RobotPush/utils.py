@@ -161,9 +161,6 @@ def save_gif_with_text(filename, inputs, text, duration=0.25):
 
 def save_image(filename, tensor):
     img = make_image(tensor)
-    # img.save(filename)
-    # print(img.shape)
-    # print(filename)
     imageio.imwrite(filename, np.transpose(img, [1,2,0]))
 
 def save_tensors_image(filename, inputs, padding=1):

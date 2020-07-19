@@ -1,7 +1,9 @@
 #Don't track content of these folders
 softmotion30_44k/
-ExtractedData/
-__pycache__/
+RobotPush/ExtractedData/
+RobotPush/__pycache__/
+RobotPush/logs/
+
 #Dataset
 *.tfrecords
 *.png

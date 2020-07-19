@@ -31,7 +31,7 @@ class RobotPushMatch(object):
         for i in range(43264):
             self.dirs_train.append('%s/%s' % (self.data_dir.replace('test', 'train'), str(i).zfill(5)))
         for i in range(256):
-            self.dirs_test.append('%s/%s' % (self.data_dir.replace('train', 'test'), str(i).zfill(3)))
+            self.dirs_test.append('%s/%s' % (self.data_dir.replace('train', 'test'), str(i).zfill(5)))
         self.seq_len = seq_len
         self.image_size = image_size 
         self.seed_is_set = False 
